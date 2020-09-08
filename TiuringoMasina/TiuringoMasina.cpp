@@ -12,26 +12,36 @@ struct eilute {
     string nauj_busena;
 };
 
-void readFile(std::string filename) {
-    std::ifstream fin(filename);
+struct instrukc {
     std::string juosta;
-    int num;
+    int pozicija;
     std::vector<struct eilute> komandos;
-    if (fin.good()) {
-        std::getline(fin, juosta);
-        fin >> num;
-        std::cout << juosta << std::endl;
-        //int i = 0;
+};
+
+instrukc readFile(std::string filename) {
+    std::ifstream fin(filename);
+    std::string x;
+    int pozic;
+    std::vector<struct eilute> kom;
+
+        std::getline(fin, x);
+        fin >> pozic;
+        //std::cout << x << std::endl;
         while (!fin.eof()) {
             eilute a;
             fin >> a.dab_busena >> a.dab_simbolis >> a.nauj_simbolis >> a.kryptis >> a.nauj_busena;
-            komandos.push_back(a);
-            std::cout << a.dab_busena << " " << a.dab_simbolis << " " << a.nauj_simbolis << " " << a.kryptis << " " << a.nauj_busena << std::endl;
+            kom.push_back(a);
+            //std::cout << a.dab_busena << " " << a.dab_simbolis << " " << a.nauj_simbolis << " " << a.kryptis << " " << a.nauj_busena << std::endl;
         }
+        instrukc result;
+        result.juosta = x;
+        result.pozicija = pozic;
+        result.komandos = kom;
         fin.close();
-    }
+        return result;
 }
 
 int main() {
-    readFile("4.txt");
+    instrukc kodas = readFile("1.txt");
+    judejimas(kodas);
 }
