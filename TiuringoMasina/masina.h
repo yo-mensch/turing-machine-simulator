@@ -3,31 +3,55 @@
 #include<iomanip>
 using namespace std;
 
-void judejimas(instrukc code) {
-	int position = code.pozicija--;
-	string busena = "0";
-	int index = 0;
-	while (position >= 0 || position <= code.juosta.size()) {
-			for (int i = 0; i < code.komandos.size(); i++) {
-				string simb = to_string(code.juosta.at(position));
+struct eilute {
+	string dab_busena;
+	char dab_simbolis;
+	char nauj_simbolis;
+	char kryptis;
+	string nauj_busena;
+};
 
-				if (busena == code.komandos[i].dab_busena) {
-					//something
+struct instrukc {
+	std::string juosta;
+	int pozicija;
+	std::vector<struct eilute> komandos;
+};
+
+void judejimas(struct instrukc code) {
+	code.pozicija--;//masyvuose pozicija 1 maziau
+	string busena = "0";//pradine busena
+	bool isHalted = false;
+	
+	while (isHalted==false) {
+		for (int i = 0; i < code.komandos.size(); i++) {
+			if (busena == code.komandos[i].dab_busena) {
+				if (code.juosta[code.pozicija]==code.komandos[i].dab_simbolis) {
+					code.juosta[code.pozicija] = code.komandos[i].nauj_simbolis;
+					busena = code.komandos[i].nauj_busena;
+					if (code.komandos[i].kryptis == 'L' && code.pozicija > 0) {
+						code.pozicija--;
+					}
+					else if (code.komandos[i].kryptis == 'R' && code.pozicija < code.juosta.size() - 1) {
+						code.pozicija++;
+					}
+					else {
+						isHalted = true;
+					}
 				}
-
-				if (code.komandos[i].dab_simbolis == simb) {
-					simb = code.komandos[i].nauj_simbolis;
-					if (code.komandos[i].kryptis == "L") {
-						position--;
-						busena = code.komandos[i].nauj_busena;
-						if (busena == "H" || busena == "X") break;
-					}
-					if (code.komandos[i].kryptis == "R") {
-						position++;
-						busena = code.komandos[i].nauj_busena;
-						if (busena == "H" || busena == "X") break;
-					}
+				else{
+					continue;
 				}
 			}
+			else {
+				continue;
+			}
+			system("cls");
+			cout << code.juosta << endl;
+			if (isHalted) {
+				cout << "Halted." << endl;
+				break;
+			}
+		}
 	}
+	//if (isHalted) cout << " halted." << endl;
 }
