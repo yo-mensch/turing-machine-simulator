@@ -47,11 +47,8 @@ void judejimas(struct instrukc code) {
 			}
 			system("cls");
 			cout << code.juosta << endl;
-			if (isHalted) {
-				cout << "Halted." << endl;
-				break;
-			}
 		}
 	}
 	//if (isHalted) cout << " halted." << endl;
+	//return code.juosta;
 }
