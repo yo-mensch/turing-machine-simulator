@@ -12,7 +12,7 @@ instrukc readFile(std::string filename) {
     std::vector<struct eilute> kom;
         std::getline(fin, x);
         fin >> pozic;
-        std::cout << x << std::endl;
+        //std::cout << x << std::endl;
         while (!fin.eof()) {
             eilute a;
             fin >> a.dab_busena >> a.dab_simbolis >> a.nauj_simbolis >> a.kryptis >> a.nauj_busena;
@@ -26,22 +26,17 @@ instrukc readFile(std::string filename) {
         return result;
 }
 
-void threadExecution(std::string filename) {
-    std::cout << filename << std::endl;
+void threadExecution(std::string filename, int id) {
     instrukc kodas1 = readFile(filename);
-    judejimas(kodas1);
-    std::cout <<kodas1.juosta<< endl;
+    std::cout<<judejimas(kodas1, id);
 }
 
 int main() {
-    //reikia kad:
-    // 1) nemirguliuotu ekraniuks
-    // 2) stabilioj pozicijoj butu visos juostos
-    // 3) pahaltinus neissitrintu galutinio rezultato eilute
-    thread t1(threadExecution, "1.txt");
-    this_thread::sleep_for(chrono::milliseconds(500));
-    thread t3(threadExecution, "3.txt");
-    this_thread::sleep_for(chrono::milliseconds(500));
+    std::thread t1(threadExecution, "1.txt", 3);
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    //std::thread t2(threadExecution, "3.txt", 0);
+    //std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    //t2.join();
     t1.join();
-    t3.join();
+    
 }

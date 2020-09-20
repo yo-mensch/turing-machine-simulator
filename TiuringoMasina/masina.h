@@ -1,14 +1,15 @@
 #pragma once
 #include <iostream>
 #include<iomanip>
-using namespace std;
+#include <Windows.h>
+//using namespace std;
 
 struct eilute {
-	string dab_busena;
+	std::string dab_busena;
 	char dab_simbolis;
 	char nauj_simbolis;
 	char kryptis;
-	string nauj_busena;
+	std::string nauj_busena;
 };
 
 struct instrukc {
@@ -17,17 +18,30 @@ struct instrukc {
 	std::vector<struct eilute> komandos;
 };
 
-void judejimas(struct instrukc code) {
+void cls(int id) {
+	HANDLE hOut;
+	COORD Position;
+
+	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	Position.X = 0;
+	Position.Y = id;
+	SetConsoleCursorPosition(hOut, Position);
+}
+
+std::string judejimas(struct instrukc code, int id) {
 	code.pozicija--;//masyvuose pozicija 1 maziau
-	string busena = "0";//pradine busena
+	std::string busena = "0";//pradine busena
 	bool isHalted = false;
-	
+	bool isChanged = false;
 	while (isHalted==false) {
 		for (int i = 0; i < code.komandos.size(); i++) {
 			if (busena == code.komandos[i].dab_busena) {
 				if (code.juosta[code.pozicija]==code.komandos[i].dab_simbolis) {
+					if (code.komandos[i].dab_simbolis != code.komandos[i].nauj_simbolis) isChanged = true;
 					code.juosta[code.pozicija] = code.komandos[i].nauj_simbolis;
 					busena = code.komandos[i].nauj_busena;
+
 					if (code.komandos[i].kryptis == 'L' && code.pozicija > 0) {
 						code.pozicija--;
 					}
@@ -41,14 +55,16 @@ void judejimas(struct instrukc code) {
 				else{
 					continue;
 				}
+				if (isChanged) {
+					cls(id);
+					std::cout << code.juosta << std::flush;
+					isChanged = false;
+				}
 			}
 			else {
 				continue;
 			}
-			system("cls");
-			cout << code.juosta << endl;
 		}
 	}
-	//if (isHalted) cout << " halted." << endl;
-	//return code.juosta;
+	return code.juosta;
 }

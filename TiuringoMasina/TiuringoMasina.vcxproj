@@ -152,8 +152,8 @@
   <ItemGroup>
     <Text Include="..\..\..\..\Documents\uni\3 semestras\komp architektūra\tiuringo masina\1.txt" />
     <Text Include="..\..\..\..\Documents\uni\3 semestras\komp architektūra\tiuringo masina\2.txt" />
-    <Text Include="..\..\..\..\Documents\uni\3 semestras\komp architektūra\tiuringo masina\3.txt" />
     <Text Include="..\..\..\..\Documents\uni\3 semestras\komp architektūra\tiuringo masina\4.txt" />
+    <Text Include="3.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="masina.h" />
