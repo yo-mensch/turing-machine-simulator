@@ -29,7 +29,7 @@ void cls(int id) {
 	SetConsoleCursorPosition(hOut, Position);
 }
 
-std::string judejimas(struct instrukc code, int id) {
+void judejimas(struct instrukc code, int id) {
 	code.pozicija--;//masyvuose pozicija 1 maziau
 	std::string busena = "0";//pradine busena
 	bool isHalted = false;
@@ -66,5 +66,5 @@ std::string judejimas(struct instrukc code, int id) {
 			}
 		}
 	}
-	return code.juosta;
+	//return code.juosta;
 }

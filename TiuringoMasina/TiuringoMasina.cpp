@@ -28,15 +28,27 @@ instrukc readFile(std::string filename) {
 
 void threadExecution(std::string filename, int id) {
     instrukc kodas1 = readFile(filename);
-    std::cout<<judejimas(kodas1, id);
+    judejimas(kodas1, id);
+}
+
+void userFriendly() {
+    int threadCount;
+    std::cout << "This is a turing machine simulator" << std::endl;
+    std::cout << "How many text files do you want to execute [1-4]?";
+    std::cin >> threadCount;
+    std::vector<std::thread> threads;
+    int placement = 3;
+    for (int i = 0; i < threadCount; i++) {
+        int fileNumber = i + 1;
+        std::string filename = std::to_string(fileNumber) + ".txt";
+        threads.push_back(std::thread(threadExecution, filename, placement));
+        placement += 2;
+    }
+    for (auto& thread : threads) {
+        thread.join();
+    }
 }
 
 int main() {
-    std::thread t1(threadExecution, "1.txt", 3);
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    //std::thread t2(threadExecution, "3.txt", 0);
-    //std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    //t2.join();
-    t1.join();
-    
+    userFriendly();
 }
