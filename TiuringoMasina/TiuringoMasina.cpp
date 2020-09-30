@@ -5,6 +5,13 @@
 #include <vector>
 #include "masina.h"
 
+
+//def kazka su mutex reikia daryti
+/*thread execution funkcijoje mtx.lock() pradzioje ir mtx.unlock() pabaigoje, BET
+1) arba pasileidzia tik 1-as failas, arba tik 2-as failas, nepriklausomai nuo
+failu sk pasirinkimo
+2) kai dedu ne i thread execution abort meto istisai*/
+
 instrukc readFile(std::string filename) {
     std::ifstream fin(filename);
     std::string x;
@@ -27,8 +34,11 @@ instrukc readFile(std::string filename) {
 }
 
 void threadExecution(std::string filename, int id) {
+    //mtx.lock();
     instrukc kodas1 = readFile(filename);
     judejimas(kodas1, id);
+    //mtx.unlock();
+    //mtx.lock();
 }
 
 void userFriendly() {
@@ -40,9 +50,11 @@ void userFriendly() {
     int placement = 3;
     for (int i = 0; i < threadCount; i++) {
         int fileNumber = i + 1;
+        //thread duplication happening???
         std::string filename = std::to_string(fileNumber) + ".txt";
         threads.push_back(std::thread(threadExecution, filename, placement));
         placement += 2;
+        //mtx.unlock();
     }
     for (auto& thread : threads) {
         thread.join();
@@ -51,4 +63,5 @@ void userFriendly() {
 
 int main() {
     userFriendly();
+    return 0;
 }

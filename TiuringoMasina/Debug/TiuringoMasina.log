@@ -1,4 +1,4 @@
 ﻿  TiuringoMasina.cpp
-C:\Users\37066\source\repos\TiuringoMasina\TiuringoMasina\masina.h(38,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\37066\source\repos\TiuringoMasina\TiuringoMasina\masina.h(48,64): warning C4018: '<': signed/unsigned mismatch
+C:\Users\37066\source\repos\TiuringoMasina\TiuringoMasina\masina.h(41,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\37066\source\repos\TiuringoMasina\TiuringoMasina\masina.h(51,64): warning C4018: '<': signed/unsigned mismatch
   TiuringoMasina.vcxproj -> C:\Users\37066\source\repos\TiuringoMasina\Debug\TiuringoMasina.exe

@@ -1,8 +1,11 @@
 #pragma once
 #include <iostream>
 #include<iomanip>
+#include <mutex>
 #include <Windows.h>
 //using namespace std;
+
+std::mutex mtx;
 
 struct eilute {
 	std::string dab_busena;
@@ -56,9 +59,11 @@ void judejimas(struct instrukc code, int id) {
 					continue;
 				}
 				if (isChanged) {
+					mtx.lock();
 					cls(id);
-					std::cout << code.juosta << std::flush;
+					std::cout << code.juosta;
 					isChanged = false;
+					mtx.unlock();
 				}
 			}
 			else {
